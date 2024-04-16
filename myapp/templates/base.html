@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <link href="../static/styles.css" rel="stylesheet" type="text/css"/>
+
 <body>
 
   <div style="border-radius:10px;border:solid;background-color:white;width:35vw;height:80vh;margin-left:5vw;margin-right:auto;margin-top:10vh;">
@@ -9,6 +10,7 @@
 
     <input style="display:block;margin:auto" type="date" id="date_request" name="input_date" value="2024-04-16" min="2024-04-16" max="2024-04-16" required pattern="\d{4}-\d{2}-\d{2}" />
 
+    <button type="button" id="search_button">Search</button>
     <div style="border-radius:10px;border:solid;background-color:white;width:70%;height:42.5%;margin-left:auto;margin-right:auto;margin-top:15%;">
       <h2>
 	{% block content %}
@@ -19,5 +21,7 @@
   </div>
 
 </body>
+
+<script src="../static/changepage.js" type="text/javascript"></script>
 
 </html>
