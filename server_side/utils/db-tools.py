@@ -45,6 +45,14 @@ def search_by_date(connection, date):
 
     print(result)
 
+    sum = 0
+    for i, item in enumerate(result[0]):
+        if i is 0 or i is 1:
+            pass
+        else:
+            sum += int(item)
+
+    print(f"Sum of {date} is {sum}")
     return result
 
 def main():
