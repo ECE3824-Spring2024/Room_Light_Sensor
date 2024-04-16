@@ -7,13 +7,11 @@ app = Flask("myapp")
 
 @app.route("/date")
 def date():
-    return render_template("date.html",title="Light Usage For 4/7/2003",content="3 Hrs On")
+    return render_template("date.html")
 
 @app.route("/")
 def index():
-    return render_template(
-        "base.html", title="Welcome", content="Welcome to our website"
-    )
+    return render_template("base.html")
  
  
 if __name__ == "__main__":
