@@ -1,0 +1,13 @@
+h1 {
+    font-family: monaco, monospace;
+    font-size:24px;
+    font-weight: bold;
+    text-align:center;
+}
+
+body {
+    background-image:url('media/oogway.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
