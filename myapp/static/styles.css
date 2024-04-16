@@ -5,8 +5,14 @@ h1 {
     text-align:center;
 }
 
+h2 {
+    font-family: monaco, monospace;
+    font-size:20px;
+    text-align:center;
+}
+
 body {
-    background-image:url('media/oogway.png');
+    background-image:url('./media/oogway.png');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
