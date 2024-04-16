@@ -2,12 +2,12 @@ import mysql.connector
 
 
 # Example usage:
-host = "lightdb.cvqyyg4i4b64.us-east-2.rds.amazonaws.com"        # Replace with your MySQL host address
-user = "flask"    # Replace with your MySQL username
-password = "flaskpass"  # Replace with your MySQL password
-database = "LightDB"  # Replace with your MySQL database name
+host = "lightdb.cvqyyg4i4b64.us-east-2.rds.amazonaws.com"
+user = "flask"
+password = "flaskpass"
+database = "LightDB"
 
-def Connect():
+def connect():
     try:
         # Establish connection to the MySQL database
         connection = mysql.connector.connect(
@@ -38,7 +38,7 @@ def ping_mysql_db(connection):
     cursor.close()
 
 
-def SearchByDate(connection, date):
+def search_by_date(connection, date):
     cursor = connection.cursor()
     cursor.execute(f"SELECT * from hourly_lights where date_entry = {date}")
     result = cursor.fetchall()
@@ -48,9 +48,9 @@ def SearchByDate(connection, date):
     return result
 
 def main():
-    connection = Connect()
+    connection = connect()
     ping_mysql_db(connection)
-    SearchByDate(connection, "'2024-04-10'")
+    search_by_date(connection, "'2024-04-10'")
 
     connection.close()
 
