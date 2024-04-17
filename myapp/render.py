@@ -7,8 +7,9 @@ app = Flask("myapp")
 
 @app.route("/date")
 def date():
-    print(request.args.get('input_date'))
-    return render_template("date.html")
+    mydate = request.args.get('input_date')
+    print(mydate)
+    return render_template("date.html",time_on=mydate)
 
 @app.route("/")
 def index():
