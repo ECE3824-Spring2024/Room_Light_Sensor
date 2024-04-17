@@ -1,4 +1,3 @@
-import sys
 from flask import Flask, render_template, request
 from utils.dbtools import connect, ping_mysql_db, get_sum, search_by_date, check_valid
 
