@@ -1,3 +1,8 @@
+/*
+Reference link: https://werner.rothschopf.net/202011_arduino_esp8266_ntp_en.htm
+
+*/
+
 #ifndef STASSID
 #define STASSID ""            // set your SSID
 #define STAPSK  ""           // set your wifi password
