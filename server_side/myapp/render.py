@@ -6,14 +6,24 @@ app = Flask("myapp")
  
 @app.route("/date")
 def date():
+
+    # Get argument
     mydate = request.args.get('input_date')
+
+    # Format for MySQL
     mydate_formatted = f"'{mydate}'"
+
+    # Connect to db
     connection = connect()
+
+    # Check if date is valid before getting total time
     if check_valid(connection, mydate_formatted):
         result = search_by_date(connection, mydate_formatted)
         result = get_sum(result)
     else:
         result = "N/A"
+
+    # Close connection and pass data into separate jinja2 template
     connection.close()
     return render_template("date.html",date=mydate, time_on=result)
 
