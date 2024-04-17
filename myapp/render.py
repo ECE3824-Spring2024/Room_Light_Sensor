@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
  
 app = Flask("myapp")
  
 
 @app.route("/date")
 def date():
+    print(request.args.get('input_date'))
     return render_template("date.html")
 
 @app.route("/")
