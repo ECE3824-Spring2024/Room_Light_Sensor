@@ -45,21 +45,25 @@ def search_by_date(connection, date):
 
     print(result)
 
+    return result
+
+def get_sum(input):
     sum = 0
-    for i, item in enumerate(result[0]):
+    for i, item in enumerate(input[0]):
         if i == 0 or i == 1:
             pass
         else:
             sum += int(item)
 
-    print(f"Sum of {date} is {sum}")
-    return result
+    print(f"Sum is {sum}")
+    return sum
 
 def main():
 
     connection = connect()
     ping_mysql_db(connection)
-    search_by_date(connection, "'2024-04-10'")
+    output = search_by_date(connection, "'2024-04-10'")
+    sum_result = get_sum(output)
 
     connection.close()
 
