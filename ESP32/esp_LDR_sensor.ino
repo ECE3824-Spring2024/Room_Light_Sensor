@@ -1,6 +1,6 @@
 #ifndef STASSID
-#define STASSID "Verizon_B7V7NG"            // set your SSID
-#define STAPSK  "serial6-jaw-arc"           // set your wifi password
+#define STASSID ""            // set your SSID
+#define STAPSK  ""           // set your wifi password
 #endif
 
 /* Configuration of NTP */
@@ -75,7 +75,7 @@ void check_light() {
     Serial.println("Light has turned ON");
   } else if (!isLightOn && lightWasOn) {
     // light off
-    lightOnDuration = millis() - lightOnStartMillis;
+    lightOnDuration = millis() - lightOnStartMillis; // returns the number of milliseconds since the ESP32 started
     Serial.print("Light was ON for ");
     Serial.print(lightOnDuration / 1000); // print the duration in seconds
     Serial.println(" seconds.");
