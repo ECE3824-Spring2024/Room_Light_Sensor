@@ -1,11 +1,6 @@
-/*
-Reference link: https://werner.rothschopf.net/202011_arduino_esp8266_ntp_en.htm
-
-*/
-
 #ifndef STASSID
-#define STASSID ""            // set your SSID
-#define STAPSK  ""           // set your wifi password
+#define STASSID "Verizon_B7V7NG"            // set your SSID
+#define STAPSK  "serial6-jaw-arc"           // set your wifi password
 #endif
 
 /* Configuration of NTP */
@@ -22,6 +17,10 @@ Reference link: https://werner.rothschopf.net/202011_arduino_esp8266_ntp_en.htm
 /* Globals */
 time_t now;           // seconds since Epoch (1970) - UTC
 tm tm;                // structure tm holds time information
+unsigned long lightOnStartMillis = 0; // store the time when the light turns on
+unsigned long lightOnDuration = 0;    // store how long the light has been on
+
+bool lightWasOn = false; // flag for tracking the previous state of the ligh
 
 void setup() {
   Serial.begin(115200);
@@ -66,17 +65,27 @@ void showTime() {
   Serial.println();
 }
 
-void checkLight() {
+void check_light() {
   int val = analogRead(LDR_PIN); // read the LDR sensor
-  if (val > LIGHT_THRESHOLD) {
-    Serial.println("Light is ON");
-  } else {
-    Serial.println("Light is OFF");
+  bool isLightOn = val > LIGHT_THRESHOLD;
+
+  if (isLightOn && !lightWasOn) {
+    // light on
+    lightOnStartMillis = millis();
+    Serial.println("Light has turned ON");
+  } else if (!isLightOn && lightWasOn) {
+    // light off
+    lightOnDuration = millis() - lightOnStartMillis;
+    Serial.print("Light was ON for ");
+    Serial.print(lightOnDuration / 1000); // print the duration in seconds
+    Serial.println(" seconds.");
+    Serial.print("Light is OFF");
   }
+  lightWasOn = isLightOn; // update the flag with the current light state
 }
 
 void loop() {
   showTime();
-  checkLight();
+  check_light();
   delay(1000); 
 }
