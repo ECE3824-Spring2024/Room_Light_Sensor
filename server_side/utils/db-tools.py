@@ -1,13 +1,13 @@
 import mysql.connector
-
-
-# Example usage:
-host = "lightdb.cvqyyg4i4b64.us-east-2.rds.amazonaws.com"
-user = "flask"
-password = "flaskpass"
-database = "LightDB"
+import configparser
 
 def connect():
+    config = configparser.ConfigParser()
+    config.read("../flaskconfig.cfg")
+    host = config['FLASK']['host']
+    user = config['FLASK']['user']
+    password = config['FLASK']['password']
+    database = config['FLASK']['database']
     try:
         # Establish connection to the MySQL database
         connection = mysql.connector.connect(
@@ -47,7 +47,7 @@ def search_by_date(connection, date):
 
     sum = 0
     for i, item in enumerate(result[0]):
-        if i is 0 or i is 1:
+        if i == 0 or i == 1:
             pass
         else:
             sum += int(item)
@@ -56,6 +56,7 @@ def search_by_date(connection, date):
     return result
 
 def main():
+
     connection = connect()
     ping_mysql_db(connection)
     search_by_date(connection, "'2024-04-10'")
