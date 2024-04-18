@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light Room Sensor</title>
+    <style>
+        /* hide the content by default */
+        .content {
+            display: none;
+        }
+    </style>
+    <script>
+        /* javascript function to toggle visibility */
+        function toggleContent(dateId) {
+            /* hides all content blocks by defauly -- blocks with class attribute set to 'content' */
+            var allContent = document.querySelectorAll('.content');
+            /* un-displays everything after a date is clicked */
+            allContent.forEach(function(content){
+                content.style.display = 'none';
+            });
+            /* show the chosen block */
+            var content = document.getElementById(dateId);
+            content.style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Light Room Sensor Records:</h1>
+            <h2>Dates:</h2>
+                {% block dates %}No dates recorded.{% endblock %}
+                
+    </header>
+
+</body>
