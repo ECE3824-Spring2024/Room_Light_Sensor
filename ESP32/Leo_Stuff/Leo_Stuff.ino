@@ -51,6 +51,57 @@ void setup() {
   Serial.println("\nWiFi connected");
 }
 
+
+String get_date() {
+  time(&now);                                           // time update
+  localtime_r(&now, &tm);                               // convert the epoch time to calendar time
+
+  char currentDate[11];                                 // buffer for formatted date
+  sprintf(currentDate, "%04d-%02d-%02d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
+
+  return String(currentDate);                           // return the date as a string
+}
+
+/* Leo stuff */
+
+void update() {
+  year = tm.tm_year + 1900;
+  month = tm.tm_mon + 1;
+  day = tm.tm_day;
+  hour = tm.tm_hour;
+  light_on = get_light_status();
+
+  if (light_on == 1) {
+    // sql incrementation
+  }
+}
+
+int get_light_status() {
+  /* check if pin is on
+   *  if so  return 1 if not return 0
+   */
+}
+
+void updateHourlyTime() {
+  configTime(-5 * 3600, 3600, MY_NTP_SERVER);
+}
+
+void updateMinutelyTime() {
+  time(&now);                       // read the current time
+  localtime_r(&now, &tm); 
+}
+
+
+
+void loop() {
+  // every minute call get_min
+  // and call updateTime
+}
+
+
+/* End Leo Stuff */
+
+
 void showTime() {
   time(&now);                       // read the current time
   localtime_r(&now, &tm);           // update the structure tm with the current time
@@ -86,7 +137,7 @@ void readSerialCommands() {
     }
 }
 
-void check_light() {
+int get_light_status() {
 /*
     int val = analogRead(LDR_PIN);                        // read the LDR sensor
     bool isLightOn = val > LIGHT_THRESHOLD;
@@ -108,7 +159,7 @@ void check_light() {
     }
 }
 
-int get_min() {
+int get_min_old() {
     totalLightOnMinutes += lightOnMinutes;              // add recent minutes to total
     if (totalLightOnMinutes >= 60) {
         totalLightOnHours += totalLightOnMinutes / 60;  // increment hours
@@ -131,17 +182,7 @@ int get_hour() {
     return totalLightOnHours;                           // return the total hours
 }
 
-String date_capture() {
-  time(&now);                                           // time update
-  localtime_r(&now, &tm);                               // convert the epoch time to calendar time
-
-  char currentDate[11];                                 // buffer for formatted date
-  sprintf(currentDate, "%04d-%02d-%02d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
-
-  return String(currentDate);                           // return the date as a string
-}
-
-void loop() {
+void loop_jalen() {
   static unsigned long lastMillis = 0;
 
   readSerialCommands();                                 // read and process any serial commands
