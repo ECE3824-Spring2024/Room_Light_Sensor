@@ -6,8 +6,8 @@ It is control by manually type the "on" and "off" in the serial monitor terminal
 
 
 #ifndef STASSID
-#define STASSID "Verizon_B7V7NG"            // set your SSID
-#define STAPSK  "serial6-jaw-arc"           // set your wifi password
+#define STASSID "Verizon_B7V7NG"            // set your SSID: tuiot
+#define STAPSK  "serial6-jaw-arc"           // set your wifi password: bruc3l0w3
 #endif
 
 /* Configuration of NTP */
