@@ -114,6 +114,7 @@ void loop() {
   if (simulatedLightOn != get_light_status()) {
     if (simulatedLightOn) {
       Serial.println("Light has turned ON");              // light turned on
+      // sql incrementation
     } else {
       Serial.println("Light is OFF");
       Serial.println("Date when light turned off: " + get_date());
