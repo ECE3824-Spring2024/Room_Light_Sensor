@@ -106,7 +106,7 @@ void loop() {
     bool currentLightStatus = get_light_status();      // light status check
 
     // check the light status change on every loop iteration
-    if (sensorValue < 800) {
+    if (currentLightStatus) {
       Serial.println("Light has turned ON");    // light turned on
       Serial.println(get_date());               // printing yy-mm-dd in terminal
       get_date();                               // capture actual NTP yy-mm-dd for db
