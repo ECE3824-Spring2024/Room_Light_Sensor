@@ -1,6 +1,6 @@
 #ifndef STASSID
-#define STASSID "tuiot"            // set your SSID: tuiot     Verizon_B7V7NG
-#define STAPSK  "bruc3l0w3"           // set your wifi password: bruc3l0w3      serial6-jaw-arc
+#define STASSID "Verizon_B7V7NG"            // set your SSID: tuiot     Verizon_B7V7NG
+#define STAPSK  "serial6-jaw-arc"           // set your wifi password: bruc3l0w3      serial6-jaw-arc
 #endif
 
 /*** Configuration of NTP ***/
@@ -13,16 +13,16 @@
 
 /*** Pin Definitions ***/
 #define LDR_PIN 2           // the pin where the LDR is connected
-#define LIGHT_THRESHOLD 300 // threshold for light detection
+#define LIGHT_THRESHOLD 800 // threshold for light detection
 
 /*** Globals ***/
 time_t now;                                 // seconds since Epoch (1970) - UTC
 tm tm;                                      // structure tm holds time information
-bool simulatedLightOn = false;              // simulate LDR sensor status
 
 void setup() {
   Serial.begin(115200);
   pinMode(LDR_PIN, INPUT);                  // initialize LDR pin as an input
+  //pinMode();
   Serial.println("\nNTP TZ DST - bare minimum");
 
   // set time zone to EST and start NTP
@@ -43,14 +43,13 @@ void setup() {
 bool get_light_status() {
   int sensorValue = analogRead(LDR_PIN);
 
-  // light on around 170
-  // light off around 1960
+  // light on value around 170
+  // light off value around 1960
   if (sensorValue < LIGHT_THRESHOLD) {
-    simulatedLightOn = true;
-  } else {
-    simulatedLightOn = false;
+    return true;
+  } else if (sensorValue > LIGHT_THRESHOLD) {
+    return false;
   }
-  return simulatedLightOn;
 }
 
 /*** Function for get the actual min from the NTP server ***/
@@ -97,20 +96,22 @@ void loop() {
   
   static unsigned long lastTimeUpdateMillis = 0;
   unsigned long currentMillis = millis();
+  //int sensorValue = analogRead(LDR_PIN);
 
   // call the functions every minutes
   if (currentMillis - lastTimeUpdateMillis >= 60000) {  // 60 seconds
     lastTimeUpdateMillis = currentMillis;
     
-    showTime();             // serial terminal monitoring, this one can be comment
-    get_light_status();     // light status check
+    showTime();                                 // serial terminal monitoring, this one can be comment
+    bool currentLightStatus = get_light_status();      // light status check
 
     // check the light status change on every loop iteration
-    if (simulatedLightOn = true) {
-      Serial.println("Light has turned ON");  // light turned on
-      get_date();
-      get_hour();
-      get_min();
+    if (sensorValue < 800) {
+      Serial.println("Light has turned ON");    // light turned on
+      Serial.println(get_date());               // printing yy-mm-dd in terminal
+      get_date();                               // capture actual NTP yy-mm-dd for db
+      get_hour();                               // capture actual NTP hour for db
+      get_min();                                // capture actual NTP minute for db
     } else {
       Serial.println("Light is OFF"); 
     }
