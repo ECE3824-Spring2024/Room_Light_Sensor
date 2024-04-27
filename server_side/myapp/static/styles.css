@@ -1,0 +1,28 @@
+h1 {
+    font-family: monaco, monospace;
+    font-size:24px;
+    font-weight: bold;
+    text-align:center;
+}
+
+h2 {
+    font-family: monaco, monospace;
+    font-size:20px;
+    text-align:center;
+}
+
+button {
+    font-family: monaco, monospace;
+    font-weight:bold;
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:10%;
+}
+
+body {
+    background-image:url('./media/oogway.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
