@@ -58,10 +58,18 @@ def get_sum(input):
     print(f"Sum is {sum}")
     return sum
 
-def check_valid(connection, date):
+def check_valid(connection, date=None, room=None):
     cursor = connection.cursor()
-    cursor.execute(f"SELECT EXISTS(SELECT 1 FROM hourly_lights WHERE date_entry = {date})")
-    result = cursor.fetchone()
+    if date is not None and room is None:
+        cursor.execute(f"SELECT EXISTS(SELECT 1 FROM hourly_lights WHERE date_entry = {date})")
+        result = cursor.fetchone()
+    elif date is None and room is not None:
+        cursor.execute(f"SELECT EXISTS(SELECT 1 FROM hourly_lights WHERE room = {room})")
+        result = cursor.fetchone()
+    elif date is not None and room is not None:
+        cursor.execute(f"SELECT EXISTS(SELECT 1 FROM hourly_lights WHERE date_entry = {date} AND room = {room})")
+        result = cursor.fetchone()
+        
     cursor.close()
 
     if result[0] == 1:
