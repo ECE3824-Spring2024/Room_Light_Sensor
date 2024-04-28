@@ -12,7 +12,7 @@ def date():
 
     # Format for MySQL
     mydate_formatted = f"'{mydate}'"
-    myroom_formatted = f"'{myroom}'"
+    myroom_formatted = f"{myroom}"
 
     # Connect to db
     connection = connect()
