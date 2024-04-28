@@ -1,5 +1,29 @@
 {% extends 'base.html' %}
 
-{% block content %}
-  <h2 style="margin-top:auto;margin-bottom:auto;">Lights were on for {{ time_on }} minutes on {{date}}</h2>
+{% block byday_info %}
+  <h2 style="margin-top:auto;margin-bottom:auto;">Lights were on for {{ time_on }} minutes on {{date}} in Room {{room_number}}</h2>
+{% endblock %}
+
+{% block byhour_info %}
+  <h2 style="margin-top:auto;margin-bottom:auto;">
+    07:00 - ### minutes <br>
+    08:00 - ### minutes <br>
+    09:00 - ### minutes <br>
+    10:00 - ### minutes <br>
+    11:00 - ### minutes <br>
+    12:00 - ### minutes <br>
+    07:00 - ### minutes <br>
+    13:00 - ### minutes <br>
+    14:00 - ### minutes <br>
+    15:00 - ### minutes <br>
+    16:00 - ### minutes <br>
+    17:00 - ### minutes <br>
+    18:00 - ### minutes <br>
+    19:00 - ### minutes <br>
+    20:00 - ### minutes <br>
+    21:00 - ### minutes <br>
+    22:00 - ### minutes <br>
+    23:00 - ### minutes <br>
+    
+  </h2>
 {% endblock %}

@@ -18,7 +18,7 @@ def date():
     connection = connect()
 
     # Check if date is valid before getting total time
-    if check_valid(connection, mydate_formatted):
+    if check_valid(connection, mydate_formatted, myroom_formatted):
         result = search_by_date(connection, mydate_formatted)
         result = get_sum(result)
     else:
@@ -26,7 +26,7 @@ def date():
 
     # Close connection and pass data into separate jinja2 template
     connection.close()
-    return render_template("date.html",date=mydate, time_on=result)
+    return render_template("date.html",date=mydate, time_on=result, room_number=myroom)
 
 @app.route("/increment_column")
 def increment_column():
