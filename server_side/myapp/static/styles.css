@@ -23,12 +23,24 @@ button {
 body, html {
     height: 100%;
     margin: 0;
-    background-image:url('./media/kirby_wallpaper.jpg');
+    background-image:url('./media/kirby-bg.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
   }
   
+  .left-window {
+    width: 40%;
+    float: left;
+    padding: 20px;
+  }
+  
+  .right-window {
+    width: 60%;
+    float: right;
+    padding: 20px;
+  }
+
   .left-section {
     width: 50%;
     float: left;
