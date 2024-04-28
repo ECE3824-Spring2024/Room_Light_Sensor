@@ -30,50 +30,69 @@
 
 <body>
 
-  <div style="border-radius:10px;border:solid;background-color:white;width:35vw;height:80vh;margin-left:5vw;margin-right:auto;margin-top:10vh;">
+  <div style="border-radius:10px;border:solid;background-color:white;width:80vw;height:80vh;margin-left:5vw;margin-right:auto;margin-top:10vh;">
     <h1 style="margin-top:20px;">ROOM LIGHT SENSOR</h1>
 
       <!-- Date and Room Input Form --> 
       <form action="/date" method="GET" style="margin-left:20px">
         Date:
-        <input style="display:block;margin:auto" type="date" id="date_request" name="input_date" min="2024-04-10" max="2024-05-16" required pattern="'\d{4}-\d{2}-\d{2}'" />
+        <input style="display:block" type="date" id="date_request" name="input_date" min="2024-04-10" max="2024-05-16" required pattern="'\d{4}-\d{2}-\d{2}'" />
         Room Number:
         <input type="radio" name="room" value="312"> 312
         <input type="radio" name="room" value="305"> 305
-        <button type="submit" id="search_button">Search</button>
+        <button type="submit" id="search_button" style="margin-top:20px">Search</button>
       </form>
 
       <!-- Section for Show-By-Hour/Day Buttons --> 
-      <div>
+      <div style="margin-left:5%;margin-right:5%;margin-top:20px">
         <!-- Section for Left Side --> 
         <div class="left-section" style="border-radius:10px;border:solid;background-color:white;border-color:#F0B5CA;width:35%;height:10px;margin-top:auto;margin-bottom:auto">
           <h4 style="margin-left:10px;margin-right:20px;margin-top:auto;margin-bottom:auto">
-            <input type="radio" name="show" value="day" id="day" onchange="toggleInfo(this.value)"> Show By Day
+            <input type="radio" name="show" value="day" id="day" onchange="toggleInfo()" checked> Show By Day
           </h4>
         </div>
         <!-- Section for Right Side --> 
         <div class="right-section" style="border-radius:10px;border:solid;background-color:white;border-color:#F0B5CA;width:35%;height:10px;margin-top:auto;margin-bottom:auto">
           <h4 style="margin-left:10px;margin-right:20px;margin-top:auto;margin-bottom:auto">
-            <input type="radio" name="show" value="hour" id="hour" onchange="toggleInfo(this.value)"> Show By Hour
+            <input type="radio" name="show" value="hour" id="hour" onchange="toggleInfo()"> Show By Hour
           </h4>
         </div>
       </div>
       
       <!-- OUTPUT --> 
       <div style="border-radius:10px;border:solid;background-color:white;width:70%;height:42.5%;margin-left:auto;margin-right:auto;margin-top:15%;">
-      <h2>
-        <!-- Show information by the Day --> 
-        <div id="day" class ="info">
-          {% block byday_info %}{% endblock %}
-        </div>
-        <!-- Show Information by the Hour --> 
-        <div id="hour" class ="info">
-          {% block byhour_info %}{% endblock %}
-        </div>
-      </h2>
-    </div>
+        <h2>
+          <!-- Show information by the Day --> 
+          <div id="byDay" class ="info">
+            {% block byday_info %}{% endblock %}
+          </div>
+          <!-- Show Information by the Hour --> 
+          <div id="byHour" class ="info">
+            {% block  byhour_info %}{% endblock %}
+          </div>
+        </h2>
+      </div>
     
   </div>
+
+  <script>
+    function toggleInfo() {
+      var day_op = document.getElementById("day");
+      var hour_op = document.getElementById("hour");
+      var day_info = document.getElementById("byDay");
+      var hour_info = document.getElementById("byHour");
+  
+      if (day_op.checked) {
+        day_info.style.display = "block";
+        hour_info.style.display = "none";
+      } else if (hour_op.checked) {
+        day_info.style.display = "none";
+        hour_info.style.display = "block";
+      }
+    }
+    
+    toggleInfo();    
+  </script>
 
 </body>
 
