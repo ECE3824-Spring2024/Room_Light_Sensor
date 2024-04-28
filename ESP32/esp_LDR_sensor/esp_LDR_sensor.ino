@@ -1,6 +1,6 @@
 #ifndef STASSID
-#define STASSID "tuiot"               // set your SSID: tuiot     
-#define STAPSK  "bruc3l0w3"           // set your wifi password: bruc3l0w3      
+#define STASSID "Treehouse"               // set your SSID: tuiot     
+#define STAPSK  "9876543212"           // set your wifi password: bruc3l0w3      
 #endif
 
 /*** Configuration of NTP ***/
@@ -9,14 +9,22 @@
 /*** Necessary Includes ***/
 #include <WiFi.h>                           // WiFi access
 #include <time.h>                           // for time() ctime()
+#include <ArduinoHttpClient.h>
 
 /*** Pin Definitions ***/
 #define LDR_PIN 4           // the pin where the LDR is connected
+#define ROOM_ID 603
 
 /*** Globals ***/
 time_t now;                                 // seconds since Epoch (1970) - UTC
 tm tm;                                      // structure tm holds time information
 int sensorValue = 0;                        
+
+/*** Flask Connection Details ***/
+String serverName = "http://192.168.1.75:5000/increment_column";
+
+WiFiClient wifi;
+HttpClient http(wifi, "http://192.168.1.75");
 
 void setup() {
   Serial.begin(115200);
@@ -100,7 +108,19 @@ void loop() {
       Serial.println(currhour);                 // print current hour in terminal
       Serial.println(currmin);                  // print current minute in terminal
       
-      sql_query(currdatetime, currhour,currmin);
+      char url_out[1024];
+      //snprintf(url_out, sizeof(url_out), "%s?date=%s&hour=%d&room=%d", serverName, currdatetime, currhour, ROOM_ID);
+      //http.begin(url_out);
+      //int httpCode = http.GET();
+      //http.end();
+      // NEED TO ADD ABILITY TO VERIFY STATUS CODE
+
+      snprintf(url_out, sizeof(url_out), "/increment_counter?date=%s&hour=%d&room=%d", currdatetime, currhour, ROOM_ID);
+      http.get(url_out);
+      int statusCode = http.responseStatusCode();
+      delay(1000);
+      http.stop();
+
     } else {
       Serial.println("Light is OFF"); 
     }
@@ -109,7 +129,7 @@ void loop() {
 
 /*** Function for sql database query ***/
 void sql_query(String datetime, int hour, int min) {
-  ;
+
 }
 
 /*** Time update function ***/
