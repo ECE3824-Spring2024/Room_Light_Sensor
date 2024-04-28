@@ -40,17 +40,15 @@ def increment_column():
     
     # Format for MySQL
     date = f"'{date}'"
-    hour = f"'hour{hour}'"
+    hour = f"hour{hour}"
+    print(hour)
     
     # Connect and see if row exists
     connection = connect()
-    if check_valid(connection, date, room):
-        try:
-            increment_hour(connection, date, room, hour)
-        except:
-            pass
-    else:
+    
+    if check_valid(connection, date, room) is False:
         create_new_row(connection, date, room)
+    increment_hour(connection, date, room, hour)
         
     connection.close()
     

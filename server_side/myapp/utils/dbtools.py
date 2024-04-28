@@ -96,6 +96,7 @@ def increment_hour(connection, date, room, hour):
     cursor = connection.cursor()
     cursor.execute(f"UPDATE hourly_lights SET {hour} = {hour} + 1 WHERE room = {room} AND date_entry = {date}")
     
+    connection.commit()
     cursor.close()
     
 
