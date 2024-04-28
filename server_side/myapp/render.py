@@ -54,9 +54,6 @@ def increment_column():
     
     return jsonify(success=True, status_code=200)
 
-        
-
-
 @app.route("/")
 def index():
     return render_template("base.html")
@@ -64,4 +61,4 @@ def index():
  
 if __name__ == "__main__":
 
-    app.run(debug=True)
+    app.run(host='192.168.1.75', port=5000, debug=True)
