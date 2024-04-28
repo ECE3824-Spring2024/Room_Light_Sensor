@@ -63,19 +63,41 @@ def check_valid(connection, date=None, room=None):
     if date is not None and room is None:
         cursor.execute(f"SELECT EXISTS(SELECT 1 FROM hourly_lights WHERE date_entry = {date})")
         result = cursor.fetchone()
+        print("1")
     elif date is None and room is not None:
         cursor.execute(f"SELECT EXISTS(SELECT 1 FROM hourly_lights WHERE room = {room})")
         result = cursor.fetchone()
+        print("2")
     elif date is not None and room is not None:
         cursor.execute(f"SELECT EXISTS(SELECT 1 FROM hourly_lights WHERE date_entry = {date} AND room = {room})")
         result = cursor.fetchone()
+        print("3")
         
     cursor.close()
 
     if result[0] == 1:
+        print("True")
         return True
     else:
+        print("False")
         return False
+    
+def create_new_row(connection, date, room):
+    print("Creating new room")
+    cursor = connection.cursor()
+    cursor.execute(f"INSERT INTO hourly_lights VALUES ({room}, {date}, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)")
+    
+    connection.commit()
+    cursor.close()
+    
+    return True
+    
+def increment_hour(connection, date, room, hour):
+    cursor = connection.cursor()
+    cursor.execute(f"UPDATE hourly_lights SET {hour} = {hour} + 1 WHERE room = {room} AND date_entry = {date}")
+    
+    cursor.close()
+    
 
 
 def main():

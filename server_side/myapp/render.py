@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request
-from utils.dbtools import connect, ping_mysql_db, get_sum, search_by_date, check_valid
+from flask import Flask, render_template, request, jsonify
+from utils.dbtools import connect, ping_mysql_db, get_sum, search_by_date, check_valid, create_new_row, increment_hour
 
 app = Flask("myapp")
  
@@ -25,6 +25,39 @@ def date():
     # Close connection and pass data into separate jinja2 template
     connection.close()
     return render_template("date.html",date=mydate, time_on=result)
+
+@app.route("/increment_column")
+def increment_column():
+    
+    # Get args
+    date = request.args.get("date")
+    hour = request.args.get("hour")
+    room = request.args.get("room")
+    
+    hour = int(hour)
+    room = int(room)
+    print(room)
+    
+    # Format for MySQL
+    date = f"'{date}'"
+    hour = f"'hour{hour}'"
+    
+    # Connect and see if row exists
+    connection = connect()
+    if check_valid(connection, date, room):
+        try:
+            increment_hour(connection, date, room, hour)
+        except:
+            pass
+    else:
+        create_new_row(connection, date, room)
+        
+    connection.close()
+    
+    return jsonify(success=True, status_code=200)
+
+        
+
 
 @app.route("/")
 def index():
