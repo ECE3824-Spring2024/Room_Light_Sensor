@@ -8,9 +8,11 @@ def date():
 
     # Get argument
     mydate = request.args.get('input_date')
+    myroom = request.args.get('room')
 
     # Format for MySQL
     mydate_formatted = f"'{mydate}'"
+    myroom_formatted = f"'{myroom}'"
 
     # Connect to db
     connection = connect()

@@ -1,9 +1,4 @@
 {% extends "base.html" %}
-{% block record %}
-    <div id="content1" class="content">
-        Content for Date 1
-    </div>
-    <div id="content2" class="content">
-        Content for Date 2
-    </div>
+{% block content %}
+  <h2 style="margin-top:auto;margin-bottom:auto;">Lights were on for {{ time_on }} minutes on {{date}}</h2>
 {% endblock %}

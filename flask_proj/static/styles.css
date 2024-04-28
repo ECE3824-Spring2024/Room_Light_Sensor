@@ -20,30 +20,9 @@ button {
     margin-top:10%;
 }
 
-body, html {
-    height: 100%;
-    margin: 0;
+body {
     background-image:url('./media/kirby_wallpaper.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-  }
-  
-  .left-section {
-    width: 50%;
-    float: left;
-    padding: 20px;
-  }
-  
-  .right-section {
-    width: 50%;
-    float: right;
-    padding: 20px;
-  }
-  
-  /* Clearfix to contain floats */
-  .container::after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+}
