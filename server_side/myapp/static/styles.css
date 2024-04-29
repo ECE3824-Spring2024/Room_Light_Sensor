@@ -42,14 +42,20 @@ body, html {
   }
 
   .left-section {
-    width: 50%;
+    width: 33%;
     float: left;
     padding: 20px;
   }
   
   .right-section {
-    width: 50%;
+    width: 33%;
     float: right;
+    padding: 20px;
+  }
+
+  .center-section {
+    width: 33%;
+    float: center;
     padding: 20px;
   }
   

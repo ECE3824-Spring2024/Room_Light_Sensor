@@ -26,6 +26,9 @@
           content.style.display = 'block';
       }
   </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
 </head>
 
 <body>
@@ -58,6 +61,12 @@
               <input type="radio" name="show" value="hour" id="hour" onchange="toggleInfo()"> Show By Hour
             </h4>
           </div>
+          <!-- Section for Center --> 
+          <div class="center-section" style="border-radius:10px;border:solid;background-color:white;border-color:#F0B5CA;width:35%;height:10px">
+            <h4 style="margin-left:10px;margin-right:20px;margin-top:auto;margin-bottom:auto">
+              <input type="radio" name="show" value="graph" id="graph" onchange="toggleInfo()"> Graph
+            </h4>
+          </div>
         </div>
     </div>
     
@@ -73,6 +82,10 @@
           <div id="byHour" class ="info">
             {% block  byhour_info %}{% endblock %}
           </div>
+          <!-- Show Information by Graph -->
+          <div id="byGraph" class="info">
+            {% block bygraph_info %}{% endblock %}
+          </div>
         </h2>
       </div>
     </div>
@@ -83,19 +96,56 @@
     function toggleInfo() {
       var day_op = document.getElementById("day");
       var hour_op = document.getElementById("hour");
+      var graph_op = document.getElementById("graph");
       var day_info = document.getElementById("byDay");
       var hour_info = document.getElementById("byHour");
+      var graph_info = document.getElementById("byGraph");
   
       if (day_op.checked) {
         day_info.style.display = "block";
         hour_info.style.display = "none";
+        graph_info.style.display = "none";
       } else if (hour_op.checked) {
         day_info.style.display = "none";
         hour_info.style.display = "block";
+        graph_info.style.display = "none";
+      } else if (graph_op.checked) {
+        day_info.style.display = "none";
+        hour_info.style.display = "none";
+        graph_info.style.display = "block";
+        renderChart(); // Function to render the chart
       }
+
     }
     
     toggleInfo();    
+  </script>
+
+  <script>
+    function renderChart() {
+      var ctx = document.getElementById('lightChart').getContext('2d');
+      var lightChart = new Chart(ctx, {
+        type: 'bar', // or 'line', 'doughnut', etc.
+        data: {
+          labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'],
+          datasets: [{
+            label: 'Minutes Light On',
+            data: hourlyLightData,
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
   </script>
 
 </body>
