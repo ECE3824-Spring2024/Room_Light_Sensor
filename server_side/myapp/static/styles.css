@@ -1,14 +1,39 @@
+@font-face {
+  font-family: 'PixelFont'; /* Define a custom font family name */
+  src: url('./media/PublicPixel-E447g.ttf') format('truetype'), /* Specify the font file and format */
+}
+
 h1 {
-    font-family: monaco, monospace;
+    font-family: 'PixelFont', san-serif;
     font-size:24px;
     font-weight: bold;
     text-align:center;
+    margin-top:20px;
+    color: #FCE9EF;
 }
 
 h2 {
-    font-family: monaco, monospace;
-    font-size:20px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size:18px;
     text-align:center;
+    margin-top:20px;
+    margin-left:10px;
+    margin-right:10px;
+}
+
+h3 {
+  font-family: 'Courier New', Courier, monospace;
+  font-size:14px;
+  text-align:center;
+  margin-top:20px;
+  margin-left:20px;
+  margin-right:20px;
+}
+
+h4 {
+  font-family: 'Courier New', Courier, monospace;
+  font-size:14px;
+  text-align:center;
 }
 
 button {
@@ -30,15 +55,13 @@ body, html {
   }
   
   .left-window {
-    width: 40%;
+    width: 45%;
     float: left;
-    padding: 20px;
   }
   
   .right-window {
-    width: 60%;
+    width: 50%;
     float: right;
-    padding: 20px;
   }
 
   .left-section {

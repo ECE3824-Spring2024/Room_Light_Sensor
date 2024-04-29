@@ -11,6 +11,9 @@
       .info {
           display: none;
       }
+      .content {
+          display: none;
+      }
   </style>
   <script>
       /* javascript function to toggle visibility */
@@ -32,23 +35,50 @@
 </head>
 
 <body>
-
+  <div style="border-radius:10px;border:solid;border-width:4px;border-color:#CD94D6;background-color:#CD94D6;margin-left:20vw;margin-right:20vw;margin-top:5vh;margin-bottom:40px">
+    <h1 style="font-size:40px">ROOM LIGHT SENSOR</h1>
+  </div>
+  
   <div>
-    <div class="left-window" style="border-radius:10px;border:solid;background-color:white;margin-left:5vw;margin-right:auto;margin-top:10vh;width:35%">
-      <h1 style="margin-top:20px;">ROOM LIGHT SENSOR</h1>
+    <div class="left-window">
+      <!-- Top-Left Window: BOX with CONTENT INFO -->
+      <div style="border-radius:10px;border:solid;border-width:4px;border-color:#CD94D6;background-color:#FDDC78;margin-left:5vw;margin-top:3vh;">
+        <h2 style="color:#AB47BC">First time here? Click items below! :D</h2>
+        <div style="border-radius:10px;border:solid;border-color:#FDF0CC;background-color:#FDF0CC;margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:20px">
+          <h2 style="margin-top:20px;">
+            <a style="color:#FFA000;margin-right:20px" href="#" onclick="toggleContent('about')">&Star;About</a>
+            <a style="color:#FFA000" href="#" onclick="toggleContent('how2use')">&Star;How to Use</a>
+          </h2>
+          <h3>
+            <div id="about" class="content">
+              <p>An ESP32 is used to track how long the lights are left on for each classroom below. This site allows you to view how long the light was left on throughout the whole day -- can be viewed by day, by hour, and graphically.</p>
+            </div>
+            <div id="how2use" class="content">
+              <p>Input a date through the date picker and check a room number. Then click submit. The viewing options can be picked without clicking submit again. :D</p>
+            </div>
+          </h3>
+        </div>
+      </div>
 
-        <!-- Date and Room Input Form --> 
-        <form action="/date" method="GET" style="margin-left:20px">
-          Date:
-          <input style="display:block" type="date" id="date_request" name="input_date" min="2024-04-10" max="2024-05-16" required pattern="'\d{4}-\d{2}-\d{2}'" />
-          Room Number:
-          <input type="radio" name="room" value="603" checked="checked"> 603
-          <input type="radio" name="room" value="9999"> 9999
-          <button type="submit" id="search_button" style="margin-top:20px">Search</button>
-        </form>
-
+      <!-- Bottom-Left Window: BOX with INPUTS -->
+      <div style="border-radius:10px;border:solid;border-width:4px;border-color:#CD94D6;background-color:#E1BEE7;margin-left:5vw;margin-top:3vh;">
+        <h2 style="color:#AB47BC">Inputs</h2>
+        <div style="border-radius:10px;border:solid;border-color:#EFDFF1;background-color:#EFDFF1;margin-left:20px;margin-right:20px;margin-top:20px">
+          <h3 style="text-align:left">
+            <!-- Date and Room Input Form --> 
+            <form action="/date" method="GET" style="margin-top:20px">
+              Date:
+              <input style="display:block;margin-bottom:20px" type="date" id="date_request" name="input_date" min="2024-04-10" max="2024-05-16" required pattern="'\d{4}-\d{2}-\d{2}'" />
+              Room Number:
+              <input type="radio" name="room" value="603" checked="checked"> 603
+              <input type="radio" name="room" value="9999"> 9999
+              <button type="submit" id="search_button" style="margin-top:20px;margin-bottom:20px">Search</button>
+            </form>
+          </h3>
+        </div>
         <!-- Section for Show-By-Hour/Day/Graph Buttons --> 
-          <div class="view-options" style="margin-top:20px; display: flex; justify-content: space-around;">
+        <div class="view-options" style="display:flex;justify-content:space-around;margin-left:0">
+          <h4>
             <label class="option-label">
               <input type="radio" name="show" value="day" id="day" onchange="toggleInfo()" checked> Show By Day
             </label>
@@ -58,28 +88,35 @@
             <label class="option-label">
               <input type="radio" name="show" value="graph" id="graph" onchange="toggleInfo()"> Show By Graph
             </label>
-          </div>
+          </h4> 
+        </div>
+      </div>   
     </div>
     
-    <div class="right-window" style="border-radius:10px;border:solid;background-color:white;margin-right:5vw;margin-top:10vh;width:45%">
-      <!-- OUTPUT --> 
-      <div style="border-radius:10px;border:solid;background-color:white;margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:20px">
-        <h2>
-          <!-- Show information by the Day --> 
-          <div id="byDay" class ="info">
-            {% block byday_info %}{% endblock %}
-          </div>
-          <!-- Show Information by the Hour --> 
-          <div id="byHour" class ="info">
-            {% block  byhour_info %}{% endblock %}
-          </div>
-          <!-- Show Information by Graph -->
-          <div id="byGraph" class="info">
-            {% block bygraph_info %}{% endblock %}
-          </div>
-        </h2>
+    
+    <div class="right-window">
+      <div style="border-radius:10px;border:solid;border-width:4px;border-color:#CD94D6;background-color:#AAE1F9;margin-right:5vw;margin-top:3vh;">
+        <!-- OUTPUT --> 
+        <h2 style="color:#AB47BC">Output</h2>
+        <div style="border-radius:10px;border:solid;border-color:#E9F7FD;background-color:#E9F7FD;margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:20px">
+          <h2>
+            <!-- Show information by the Day --> 
+            <div id="byDay" class ="info">
+              {% block byday_info %}{% endblock %}
+            </div>
+            <!-- Show Information by the Hour --> 
+            <div id="byHour" class ="info">
+              {% block  byhour_info %}{% endblock %}
+            </div>
+            <!-- Show Information by Graph -->
+            <div id="byGraph" class="info">
+              {% block bygraph_info %}{% endblock %}
+            </div>
+          </h2>
+        </div>
       </div>
     </div>
+    
     
   </div>
 
@@ -111,6 +148,21 @@
     
     toggleInfo();    
   </script>
+
+  <script>
+    /* javascript function to toggle visibility */
+    function toggleContent(contentID) {
+        /* hides all content blocks by defauly -- blocks with class attribute set to 'content' */
+        var allContent = document.querySelectorAll('.content');
+        /* un-displays everything after a date is clicked */
+        allContent.forEach(function(content){
+            content.style.display = 'none';
+        });
+        /* show the chosen block */
+        var content = document.getElementById(contentID);
+        content.style.display = 'block';
+    }
+</script>
 
   <script>
     function renderChart() {
