@@ -47,27 +47,18 @@
           <button type="submit" id="search_button" style="margin-top:20px">Search</button>
         </form>
 
-        <!-- Section for Show-By-Hour/Day Buttons --> 
-        <div style="margin-top:20px;margin-bottom:20px">
-          <!-- Section for Left Side --> 
-          <div class="left-section" style="border-radius:10px;border:solid;background-color:white;border-color:#F0B5CA;width:35%;height:10px">
-            <h4 style="margin-left:10px;margin-right:20px;margin-top:auto;margin-bottom:auto">
+        <!-- Section for Show-By-Hour/Day/Graph Buttons --> 
+          <div class="view-options" style="margin-top:20px; display: flex; justify-content: space-around;">
+            <label class="option-label">
               <input type="radio" name="show" value="day" id="day" onchange="toggleInfo()" checked> Show By Day
-            </h4>
-          </div>
-          <!-- Section for Right Side --> 
-          <div class="right-section" style="border-radius:10px;border:solid;background-color:white;border-color:#F0B5CA;width:35%;height:10px;">
-            <h4 style="margin-left:10px;margin-right:20px;margin-top:auto;margin-bottom:auto">
+            </label>
+            <label class="option-label">
               <input type="radio" name="show" value="hour" id="hour" onchange="toggleInfo()"> Show By Hour
-            </h4>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="show" value="graph" id="graph" onchange="toggleInfo()"> Show By Graph
+            </label>
           </div>
-          <!-- Section for Center --> 
-          <div class="center-section" style="border-radius:10px;border:solid;background-color:white;border-color:#F0B5CA;width:35%;height:10px">
-            <h4 style="margin-left:10px;margin-right:20px;margin-top:auto;margin-bottom:auto">
-              <input type="radio" name="show" value="graph" id="graph" onchange="toggleInfo()"> Graph
-            </h4>
-          </div>
-        </div>
     </div>
     
     <div class="right-window" style="border-radius:10px;border:solid;background-color:white;margin-right:5vw;margin-top:10vh;width:45%">
@@ -125,11 +116,11 @@
     function renderChart() {
       var ctx = document.getElementById('lightChart').getContext('2d');
       var lightChart = new Chart(ctx, {
-        type: 'bar', // or 'line', 'doughnut', etc.
+        type: 'bar',
         data: {
           labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'],
           datasets: [{
-            label: 'Minutes Light On',
+            label: 'Minutes',
             data: hourlyLightData,
             backgroundColor: 'rgba(54, 162, 235, 0.2)',
             borderColor: 'rgba(54, 162, 235, 1)',
@@ -139,7 +130,18 @@
         options: {
           scales: {
             y: {
-              beginAtZero: true
+              beginAtZero: true,
+              max: 60,
+              title: {
+                display: true,
+                text: 'Minutes Light On'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Hour of Day'
+              }
             }
           }
         }
