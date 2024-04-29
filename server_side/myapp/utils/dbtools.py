@@ -2,12 +2,12 @@ import mysql.connector
 import configparser
 
 def connect():
-    config = configparser.ConfigParser()
-    config.read("../flaskconfig.cfg")
-    host = config['FLASK']['host']
-    user = config['FLASK']['user']
-    password = config['FLASK']['password']
-    database = config['FLASK']['database']
+    #config = configparser.ConfigParser()
+    #config.read("/home/theinternetlion/toup/myapp/utils/flaskconfig.cfg")
+    host = "lightdb.cvqyyg4i4b64.us-east-2.rds.amazonaws.com"#config['FLASK']['host']
+    user = "flask"#config['FLASK']['user']
+    password = "flaskpass"#config['FLASK']['password']
+    database = "LightDB"#config['FLASK']['database']
     try:
         # Establish connection to the MySQL database
         connection = mysql.connector.connect(
