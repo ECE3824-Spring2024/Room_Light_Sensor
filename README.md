@@ -14,3 +14,19 @@ flaskpass
 ### ESP32 Credentials
 esp32
 esp32pass
+
+### GCloud Deployment
+* Navigate to search bar and search App Engine (Managed app platform)
+* New Project
+* Name your project
+* Notifications -> Select Project
+* Create Application
+* Select Region and Continue with defaults
+* Select Language -> Python
+* Select Environment -> Standard
+* Click I'll do this later
+* Navigate to Activate Cloud Shell
+* Upload appropriate documents/get github repo
+* Navigate to myapp folder
+* $gcloud app deploy
+* Browser your website!
