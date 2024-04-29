@@ -20,9 +20,48 @@ button {
     margin-top:10%;
 }
 
-body {
-    background-image:url('./media/oogway.png');
+body, html {
+    height: 100%;
+    margin: 0;
+    background-image:url('./media/kirby-bg.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-}
+  }
+  
+  .left-window {
+    width: 40%;
+    float: left;
+    padding: 20px;
+  }
+  
+  .right-window {
+    width: 60%;
+    float: right;
+    padding: 20px;
+  }
+
+  .left-section {
+    width: 33%;
+    float: left;
+    padding: 20px;
+  }
+  
+  .right-section {
+    width: 33%;
+    float: right;
+    padding: 20px;
+  }
+
+  .center-section {
+    width: 33%;
+    float: center;
+    padding: 20px;
+  }
+  
+  /* Clearfix to contain floats */
+  .container::after {
+    content: "";
+    display: table;
+    clear: both;
+  }

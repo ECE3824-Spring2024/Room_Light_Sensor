@@ -2,24 +2,153 @@
 <html>
 <link href="../static/styles.css" rel="stylesheet" type="text/css"/>
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Room Light Sensor</title>
+  <style>
+      /* hide the content by default */
+      .info {
+          display: none;
+      }
+  </style>
+  <script>
+      /* javascript function to toggle visibility */
+      function toggleInfo(RadioValue) {
+          /* hides all content blocks by default -- blocks with class attribute set to 'content' */
+          var allContent = document.querySelectorAll('.info');
+          /* un-displays everything after a date is clicked */
+          allContent.forEach(function(content){
+              content.style.display = 'none';
+          });
+          /* show the chosen block */
+          var content = document.getElementById(RadioValue);
+          content.style.display = 'block';
+      }
+  </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+</head>
+
 <body>
 
-  <div style="border-radius:10px;border:solid;background-color:white;width:35vw;height:80vh;margin-left:5vw;margin-right:auto;margin-top:10vh;">
+  <div>
+    <div class="left-window" style="border-radius:10px;border:solid;background-color:white;margin-left:5vw;margin-right:auto;margin-top:10vh;width:35%">
+      <h1 style="margin-top:20px;">ROOM LIGHT SENSOR</h1>
 
-    <h1 style="margin-top:">ROOM LIGHT SENSOR</h1>
+        <!-- Date and Room Input Form --> 
+        <form action="/date" method="GET" style="margin-left:20px">
+          Date:
+          <input style="display:block" type="date" id="date_request" name="input_date" min="2024-04-10" max="2024-05-16" required pattern="'\d{4}-\d{2}-\d{2}'" />
+          Room Number:
+          <input type="radio" name="room" value="603" checked="checked"> 603
+          <input type="radio" name="room" value="9999"> 9999
+          <button type="submit" id="search_button" style="margin-top:20px">Search</button>
+        </form>
 
-      <form action="/date" method="GET">
-        <input style="display:block;margin:auto" type="date" id="date_request" name="input_date" min="2024-04-10" max="2024-05-16" required pattern="'\d{4}-\d{2}-\d{2}'" />
-        <button type="submit" id="search_button">Search</button>
-      </form>
-      <div style="border-radius:10px;border:solid;background-color:white;width:70%;height:42.5%;margin-left:auto;margin-right:auto;margin-top:15%;">
-      <h2>
-	{% block content %}
-	{% endblock %}
-      </h2>
+        <!-- Section for Show-By-Hour/Day/Graph Buttons --> 
+          <div class="view-options" style="margin-top:20px; display: flex; justify-content: space-around;">
+            <label class="option-label">
+              <input type="radio" name="show" value="day" id="day" onchange="toggleInfo()" checked> Show By Day
+            </label>
+            <label class="option-label">
+              <input type="radio" name="show" value="hour" id="hour" onchange="toggleInfo()"> Show By Hour
+            </label>
+            <label class="option-label">
+              <input type="radio" name="show" value="graph" id="graph" onchange="toggleInfo()"> Show By Graph
+            </label>
+          </div>
+    </div>
+    
+    <div class="right-window" style="border-radius:10px;border:solid;background-color:white;margin-right:5vw;margin-top:10vh;width:45%">
+      <!-- OUTPUT --> 
+      <div style="border-radius:10px;border:solid;background-color:white;margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:20px">
+        <h2>
+          <!-- Show information by the Day --> 
+          <div id="byDay" class ="info">
+            {% block byday_info %}{% endblock %}
+          </div>
+          <!-- Show Information by the Hour --> 
+          <div id="byHour" class ="info">
+            {% block  byhour_info %}{% endblock %}
+          </div>
+          <!-- Show Information by Graph -->
+          <div id="byGraph" class="info">
+            {% block bygraph_info %}{% endblock %}
+          </div>
+        </h2>
+      </div>
     </div>
     
   </div>
+
+  <script>
+    function toggleInfo() {
+      var day_op = document.getElementById("day");
+      var hour_op = document.getElementById("hour");
+      var graph_op = document.getElementById("graph");
+      var day_info = document.getElementById("byDay");
+      var hour_info = document.getElementById("byHour");
+      var graph_info = document.getElementById("byGraph");
+  
+      if (day_op.checked) {
+        day_info.style.display = "block";
+        hour_info.style.display = "none";
+        graph_info.style.display = "none";
+      } else if (hour_op.checked) {
+        day_info.style.display = "none";
+        hour_info.style.display = "block";
+        graph_info.style.display = "none";
+      } else if (graph_op.checked) {
+        day_info.style.display = "none";
+        hour_info.style.display = "none";
+        graph_info.style.display = "block";
+        renderChart(); // Function to render the chart
+      }
+
+    }
+    
+    toggleInfo();    
+  </script>
+
+  <script>
+    function renderChart() {
+      var ctx = document.getElementById('lightChart').getContext('2d');
+      var lightChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'],
+          datasets: [{
+            label: 'Minutes',
+            data: hourlyLightData,
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 60,
+              title: {
+                display: true,
+                text: 'Minutes Light On'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Hour of Day'
+              }
+            }
+          }
+        }
+      });
+    }
+
+  </script>
 
 </body>
 

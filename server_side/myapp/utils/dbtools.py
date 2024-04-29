@@ -38,9 +38,9 @@ def ping_mysql_db(connection):
     cursor.close()
 
 
-def search_by_date(connection, date):
+def search_combo(connection, date, room):
     cursor = connection.cursor()
-    cursor.execute(f"SELECT * from hourly_lights where date_entry = {date}")
+    cursor.execute(f"SELECT * from hourly_lights where date_entry = {date} AND room = {room}")
     result = cursor.fetchall()
 
     cursor.close()
@@ -55,7 +55,6 @@ def get_sum(input):
         else:
             sum += int(item)
 
-    print(f"Sum is {sum}")
     return sum
 
 def check_valid(connection, date=None, room=None):
@@ -63,27 +62,21 @@ def check_valid(connection, date=None, room=None):
     if date is not None and room is None:
         cursor.execute(f"SELECT EXISTS(SELECT 1 FROM hourly_lights WHERE date_entry = {date})")
         result = cursor.fetchone()
-        print("1")
     elif date is None and room is not None:
         cursor.execute(f"SELECT EXISTS(SELECT 1 FROM hourly_lights WHERE room = {room})")
         result = cursor.fetchone()
-        print("2")
     elif date is not None and room is not None:
         cursor.execute(f"SELECT EXISTS(SELECT 1 FROM hourly_lights WHERE date_entry = {date} AND room = {room})")
         result = cursor.fetchone()
-        print("3")
         
     cursor.close()
 
     if result[0] == 1:
-        print("True")
         return True
     else:
-        print("False")
         return False
     
 def create_new_row(connection, date, room):
-    print("Creating new room")
     cursor = connection.cursor()
     cursor.execute(f"INSERT INTO hourly_lights VALUES ({room}, {date}, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)")
     
@@ -106,7 +99,7 @@ def main():
     connection = connect()
     ping_mysql_db(connection)
     print(check_valid(connection, "'2024-04-10'"))
-    output = search_by_date(connection, "'2024-04-10'")
+    output = search_combo(connection, "'2024-04-10'", 603)
     sum_result = get_sum(output)
 
     connection.close()
